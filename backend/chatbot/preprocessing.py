@@ -38,14 +38,14 @@ for i in lines:
             pass
 
 #Define Characters to keep
-EN_WHITELIST = '0123456789abcdefghijklmnopqrstuvwxyz ' # space is included in whitelist
+whitelist = '0123456789abcdefghijklmnopqrstuvwxyz ' # space is included in whitelist
 
 #manipulates the text to lower cas and only keeps the whitelist. Saves it in a list that contains lists of length 2: each first element is L-id and second element is corresponding text        
 counter=0    
 for line in content:
     newLine = ''
     for character in line[1].lower():
-        if character in EN_WHITELIST:
+        if character in whitelist:
             newLine = newLine + character
     content[counter][1] = newLine
     counter += 1
