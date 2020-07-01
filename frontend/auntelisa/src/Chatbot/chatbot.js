@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Button from '@material-ui/core/Button';
+import { communication } from '../backendconnection'
 
 function HomeIcon(props) {
     return (
@@ -18,8 +19,7 @@ class Chatbot extends React.Component {
   constructor() {
      super();
      this.state = {
-        inputText: 'input text',
-        outputText: 'output text'
+        text: 'initial text'
      }
   }
 
@@ -31,8 +31,8 @@ class Chatbot extends React.Component {
     recognition.onresult = (event) => {
         const speechToText = event.results[0][0].transcript;
         console.log(speechToText);
-        this.setState({ inputText: speechToText });
-        console.log(this.state.inputText);
+        this.setState({ text: speechToText });
+        console.log(this.state.text);
     }
   }
 
@@ -40,15 +40,34 @@ class Chatbot extends React.Component {
       const synth = window.speechSynthesis;
   
       const speak = (text) => {
-          var foo = new SpeechSynthesisUtterance(text);
-          foo.lang = 'en-GB';
-          synth.speak(foo);
+          var output = new SpeechSynthesisUtterance(text);
+          output.lang = 'en-GB';
+          synth.speak(output);
       };
       return speak(input);
   }
 
-  changeOutput = () => {
-    this.setState({ outputText: this.state.inputText });
+  wait = (s) => {
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + (s * 1000) ) {
+      end = new Date().getTime();
+   }
+ }
+
+  talk = () =>{
+    let inputtext = this.hear();    
+    this.setState({ text: inputtext });
+    console.log(inputtext);
+    console.log(this.state.text);
+  }
+
+  response = () => {
+    let inputtext = this.state.text; 
+    console.log(inputtext);
+    inputtext = communication(inputtext);
+    this.setState({ Text: inputtext });
+    this.speak(inputtext);
   }
 
   render() {
@@ -60,47 +79,30 @@ class Chatbot extends React.Component {
                 <HomeIcon fontSize="large" />
             </IconButton>
         </div>
-        <div>
-          {/* Microfone button*/}
+
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
+          {/* Talk button*/}
           <Button 
-            variant="contained" 
-            color="secondary" 
+            variant="contained"  
             startIcon={<KeyboardVoiceIcon />} 
-            onClick={() => {this.hear()}}
+            onClick={() => {this.talk()}}
           >
             Talk
           </Button>
         </div>
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
+          {/* Response button*/}
+          <Button 
+            variant="contained"  
+            onClick={() => {this.response()}}
+          >
+            get response
+          </Button>
+        </div>
         <div>
           {/* input-text box*/}
-          <h2>Your input is: </h2>
-          <h2>{this.state.inputText}</h2>
-        </div>
-        <div>
-          {/* speach bubble*/}
-          <Button 
-            variant="contained" 
-            size="medium" 
-            color="primary" 
-            onClick={() => {this.changeOutput()}}
-          >
-              compute input
-          </Button>
-        </div>
-        <div>
-          {/* output-text box*/}
-          <h2>Elisa told you: </h2>
-          <h2>{this.state.outputText}</h2>
-        </div>
-        <div>
-          <Button 
-            variant="contained" 
-            size="medium" 
-            color="primary" 
-            onClick={() => {this.speak(this.state.outputText)}}
-          >
-              Say "Welcome to Aunt Elisa"
-          </Button>
+          <h2>Text is: </h2>
+          <h2>{this.state.Text}</h2>
         </div>
       </div>
     );
