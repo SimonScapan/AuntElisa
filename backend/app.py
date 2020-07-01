@@ -9,7 +9,6 @@ CORS = CORS(APP)
 @APP.route('/backend/<text>', methods=["GET"])
 def chatbot(text):
     foo = Therapist(text)
-    print(foo)
     return foo
 
 if __name__ == '__main__':
