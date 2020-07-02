@@ -13,12 +13,8 @@ The Product is not ready to get used as a life system!
 ### Prerequisites
 
 You need to install docker on your machine to run the project.
-If you allready have docker installed, continue to next point, else go to following webpage:
-
-
-```
-https://docs.docker.com/get-docker/
-```
+If you allready have docker installed, continue to next point.
+Else visit [Docker](https://docs.docker.com/get-docker/) to install Docker software.
 
 ### Installing
 
@@ -45,60 +41,56 @@ docker-compose build
 docker-compose up
 ```
 
-5. the webapp is now available on localhost:3000
+5. the webapp is now available on:
+
+```
+localhost:3000
+```
 
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Go to Landingpage on:
 
 ```
-Give an example
+localhost:3000
 ```
 
-### And coding style tests
+There you see the welcome page with our logo (easter egg included)
 
-Explain what these tests test and why
+By clicking on "START AUNT ELISA" the application gets usable.
+You can return to Landingpage by clicking on the house icon top left.
 
-```
-Give an example
-```
+Press "TALK" and speak to Elisa.
+If you are ready click on "GET RESPONSE" to hear, what Elisa want's to response you.
 
-## Deployment
+Repeat the last two steps to enjoy a full conversatoin with the chatbot.
 
-Add additional notes about how to deploy this on a live system
+
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [React](https://reactjs.org) - for web application
+* [Docker](https://www.docker.com) - application platform
+* [Python](https://www.python.org) - used for backend and chatbot
+* [Flask](https://pypi.org/project/Flask/) - used for connection to frontend
+* [SpeechRecognition](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) - speech to text
+* [SpeechSynthesis](https://developer.mozilla.org/de/docs/Web/API/SpeechSynthesis) - text to speech
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Simon Scapan** - *Initial work* - [SimonScapan](https://github.com/SimonScapan)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Jannik Fischer** - *Contribution* - [Algebrator1997](https://github.com/Algebrator1997)
+
+* **Johannes Deufel** - *Chatbot development* - [Johannes](https://github.com/Johannes998)
+
+* **Simone Marx** - *Chatbot development* - [SimoneMarx](https://github.com/SimoneMarx)
+
+
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
