@@ -1,7 +1,6 @@
 # Project Aunt Elisa
 
-![logo](logo/granma.jpg)
-![animation](logo/logo.mp4)
+![logo](logo/auntelisa.jpg)
 
 
 The project is about to have an web application with whom the user is able to interact.
