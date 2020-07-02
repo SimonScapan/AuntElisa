@@ -1,4 +1,0 @@
-docker stop react_frontend_container
-docker stop flask_backend_container
-docker stop postgres_database_container
-docker stop pg-admin
