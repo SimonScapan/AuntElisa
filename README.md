@@ -1,4 +1,4 @@
-# Project Title: Aunt Eliza
+# Project Aunt Elisa
 
 The project is about to have an web application with whom the user is able to interact.
 Especially for lonely peoply and in connection to the actual corona crisis.
@@ -12,29 +12,41 @@ The Product is not ready to get used as a life system!
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You need to install docker on your machine to run the project.
+If you allready have docker installed, continue to next point, else go to following webpage:
+
 
 ```
-Give examples
+https://docs.docker.com/get-docker/
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+This step by step series tells you how to get a development env running:
 
-Say what the step will be
+1. start docker software
 
-```
-Give the example
-```
+2. go to Terminal and navigate to root of project folder, like this:
 
-And repeat
 
 ```
-until finished
+cd AuntElisa
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+3. now build docker-compose
+
+```
+docker-compose build
+```
+
+4. then run docker-compose
+
+```
+docker-compose up
+```
+
+5. the webapp is now available on localhost:3000
+
 
 ## Running the tests
 
