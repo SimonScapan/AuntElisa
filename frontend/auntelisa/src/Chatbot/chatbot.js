@@ -6,6 +6,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import Button from '@material-ui/core/Button';
 import { communication } from '../backendconnection'
 
+
+// home icon functionalities
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -14,8 +16,8 @@ function HomeIcon(props) {
     );
 };
 
-
 class Chatbot extends React.Component {
+  // initialize state to handle user input text as string
   constructor() {
      super();
      this.state = {
@@ -23,65 +25,72 @@ class Chatbot extends React.Component {
      }
   }
 
+  // function for computing speech-to-text
   hear = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
+    // start listening
     recognition.start();
+    // if there is no longer voice input, than we can access to the result
     recognition.onresult = (event) => {
         const speechToText = event.results[0][0].transcript;
         console.log(speechToText);
+        // set the users voice as string to state variable
         this.setState({ text: speechToText });
         console.log(this.state.text);
     }
   }
 
+  // function for computing text-to-speech
   speak = (input) => {
       const synth = window.speechSynthesis;
   
       const speak = (text) => {
+          // for this we use Mozillas SpeechSynthesiser
           var output = new SpeechSynthesisUtterance(text);
+          // set the Language to english
           output.lang = 'en-GB';
           synth.speak(output);
       };
       return speak(input);
   }
 
-  wait = (s) => {
-    var start = new Date().getTime();
-    var end = start;
-    while(end < start + (s * 1000) ) {
-      end = new Date().getTime();
-   }
- }
 
+  // get voice to state
   talk = () =>{
-    let inputtext = this.hear();    
+    // listen to user
+    let inputtext = this.hear(); 
+    // write output to state variable   
     this.setState({ text: inputtext });
-    console.log(inputtext);
-    console.log(this.state.text);
   }
 
+  // give output of chatbot
   response = () => {
+    // get state variable
     let inputtext = this.state.text; 
     console.log(inputtext);
+    // compute answer using chatbot
     inputtext = communication(inputtext);
+    // reset state with new answer
     this.setState({ Text: inputtext });
+    // give audio response to user
     this.speak(inputtext);
   }
 
   render() {
     return (
       <div className="Chatbot">
+
+        {/* Home button*/}
         <div>
-          {/* Home button*/}
             <IconButton color="primary" aria-label="upload picture" component={Link} to={'/'}>
                 <HomeIcon fontSize="large" />
             </IconButton>
         </div>
 
+        {/* Talk button*/}
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
-          {/* Talk button*/}
           <Button 
             variant="contained"  
             startIcon={<KeyboardVoiceIcon />} 
@@ -90,8 +99,9 @@ class Chatbot extends React.Component {
             Talk
           </Button>
         </div>
+
+        {/* Response button*/}
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
-          {/* Response button*/}
           <Button 
             variant="contained"  
             onClick={() => {this.response()}}
@@ -99,11 +109,7 @@ class Chatbot extends React.Component {
             get response
           </Button>
         </div>
-        <div>
-          {/* input-text box*/}
-          <h2>Text is: </h2>
-          <h2>{this.state.Text}</h2>
-        </div>
+
       </div>
     );
   }
