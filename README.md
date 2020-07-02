@@ -1,5 +1,9 @@
 # Project Aunt Elisa
 
+![logo](logo/granma.jpg)
+![animation](logo/logo.mp4)
+
+
 The project is about to have an web application with whom the user is able to interact.
 Especially for lonely peoply and in connection to the actual corona crisis.
 With our Product Aunt Eilza no one has to be anlone. Just talk with the chatbot and feel social proximity.
@@ -50,7 +54,10 @@ localhost:3000
 
 ## Running the tests
 
-Go to Landingpage on:
+**PLEASE USE CHROME BROWSER!**
+Otherwise there is no guarantee that the application will work properly.
+
+Access Landingpage at:
 
 ```
 localhost:3000
