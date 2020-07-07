@@ -1,6 +1,7 @@
 import csv
 import re
 import pickle
+import random
 from functions import clean_text
 
 #Define Parameters of Preprocessing
@@ -103,7 +104,7 @@ for dialog in dialogs:
         except IndexError:
             pass
 
-preprocessed_data= {'word2ix' : word2index, 'ixtoword' : index2word, 'pairs_final_train': messageResponse, 'short_vocab': wordset, 'max_len_q': maxlength}
+preprocessed_data= {'word2ix' : word2index, 'ixtoword' : index2word, 'pairs_final_train': random.shuffle(messageResponse), 'short_vocab': wordset, 'max_len_q': maxlength}
 
 #Writes the preprocessed data to file
 with open('preprocessed_data.pkl', 'wb') as f:
