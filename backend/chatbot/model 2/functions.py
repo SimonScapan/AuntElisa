@@ -40,8 +40,8 @@ def progressBar(value, endvalue, bar_length=20, job='Job'):
     sys.stdout.write("\r{0} Completion: [{1}] {2}%".format(job,arrow + spaces, int(round(percent * 100))))
     sys.stdout.flush()
 
-#Splits the data into train (70%), test (15%) and valid(15%)
-def split_dataset(sentences, sizes = [0.7, 0.15, 0.15] ): # number of examples
+#Splits the data into train (80%), test (5%) and valid(15%)
+def split_dataset(sentences, sizes = [0.8, 0.5, 0.15] ): # number of examples
     data_len = len(sentences)
     lens = [int(data_len*item) for item in sizes]
 
