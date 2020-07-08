@@ -87,12 +87,12 @@ for word in wordset:
     index2word[counter] = word
     counter += 1
 
-word2index['<BOS> '] = counter+1
-index2word[counter+1] = '<BOS> '
-word2index[' <EOS>'] = counter+2
-index2word[counter+2] = ' <EOS>'
+word2index['<bos>'] = counter+1
+index2word[counter+1] = '<bos>'
+word2index['<eos>'] = counter+2
+index2word[counter+2] = '<eos>'
 
-wordset = wordset + ['<BOS> '] + [' <EOS>']
+wordset = wordset + ['<bos>'] + ['<eos>']
 
 #Creating a List of a List with messages represented by a List of word IDs and the corresponding response represented by a list of word IDs
 messageResponse = []
@@ -100,7 +100,7 @@ for dialog in dialogs:
     for i in range(len(dialog)):
         try:
             if dialog[i] not in tooLong and dialog[i+1] not in tooLong: 
-                messageResponse.append(['<BOS> ' + contentdict[dialog[i]] + ' <EOS>', '<BOS> ' + contentdict[dialog[i+1]] + ' <EOS>'])
+                messageResponse.append(['<bos> ' + contentdict[dialog[i]] + ' <eos>', '<bos> ' + contentdict[dialog[i+1]] + ' <eos>'])
         except IndexError:
             pass
 
