@@ -47,6 +47,9 @@ def split_dataset(sentences, sizes = [0.8, 0.5, 0.15] ): # number of examples
 
     train = sentences[:lens[0]]
     test = sentences[lens[0]:lens[0]+lens[1]]
+    test_new = []
+    for sentences in test:
+      test_new.append([re.sub('[<>BEOS]', '', sentences[0])[1:-1], re.sub('[<>BEOS]', '', sentences[1])[1:-1]])
     valid = sentences[-lens[-1]:]
 
-    return train, test, valid
+    return train, test_new, valid

@@ -1,7 +1,10 @@
+#Import packages
 import csv
+import random
 import re
 import pickle
-import random
+
+#Import functions
 from functions import clean_text
 
 #Define Parameters of Preprocessing
@@ -26,35 +29,6 @@ for i in lines:
         content.append([line[0][0], line[0][1]])
     except IndexError:
             pass
-
-#Removes special characters from text
-def clean_text(text):
-    '''Clean text by removing unnecessary characters and altering the format of words.'''
-
-    text = text.lower()
-    
-    text = re.sub(r"i'm", "i am", text)
-    text = re.sub(r"he's", "he is", text)
-    text = re.sub(r"she's", "she is", text)
-    text = re.sub(r"it's", "it is", text)
-    text = re.sub(r"that's", "that is", text)
-    text = re.sub(r"what's", "that is", text)
-    text = re.sub(r"where's", "where is", text)
-    text = re.sub(r"how's", "how is", text)
-    text = re.sub(r"\'ll", " will", text)
-    text = re.sub(r"\'ve", " have", text)
-    text = re.sub(r"\'re", " are", text)
-    text = re.sub(r"\'d", " would", text)
-    text = re.sub(r"\'re", " are", text)
-    text = re.sub(r"won't", "will not", text)
-    text = re.sub(r"can't", "cannot", text)
-    text = re.sub(r"n't", " not", text)
-    text = re.sub(r"n'", "ng", text)
-    text = re.sub(r"'bout", "about", text)
-    text = re.sub(r"'til", "until", text)
-    text = re.sub(r"[-()\"#/@;:<>{}`+=~|.!?,]", "", text)
-    
-    return text
 
 #Cleans the text, creates a List of too long sentences and creates a List of tokenized sentences which are not too long
 tooLong=[]
@@ -87,12 +61,12 @@ for word in wordset:
     index2word[counter] = word
     counter += 1
 
-word2index['<bos>'] = counter+1
-index2word[counter+1] = '<bos>'
-word2index['<eos>'] = counter+2
-index2word[counter+2] = '<eos>'
+word2index['<BOS>'] = counter+1
+index2word[counter+1] = '<BOS>'
+word2index['<EOS>'] = counter+2
+index2word[counter+2] = '<EOS>'
 
-wordset = wordset + ['<bos>'] + ['<eos>']
+wordset = wordset + ['<BOS>'] + ['<EOS>']
 
 #Creating a List of a List with messages represented by a List of word IDs and the corresponding response represented by a list of word IDs
 messageResponse = []
@@ -100,11 +74,13 @@ for dialog in dialogs:
     for i in range(len(dialog)):
         try:
             if dialog[i] not in tooLong and dialog[i+1] not in tooLong: 
-                messageResponse.append(['<bos> ' + contentdict[dialog[i]] + ' <eos>', '<bos> ' + contentdict[dialog[i+1]] + ' <eos>'])
+                messageResponse.append(['<BOS> ' + contentdict[dialog[i]] + ' <EOS>', '<BOS> ' + contentdict[dialog[i+1]] + ' <EOS>'])
         except IndexError:
             pass
 
-preprocessed_data= {'word2ix' : word2index, 'ixtoword' : index2word, 'pairs_final_train': random.shuffle(messageResponse), 'short_vocab': wordset, 'max_len_q': maxlength}
+#messageResponse = random.shuffle(messageResponse)
+
+preprocessed_data= {'word2ix' : word2index, 'ixtoword' : index2word, 'pairs_final_train': messageResponse, 'short_vocab': wordset, 'max_len_q': maxlength}
 
 #Writes the preprocessed data to file
 with open('preprocessed_data.pkl', 'wb') as f:
