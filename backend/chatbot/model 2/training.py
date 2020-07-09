@@ -266,7 +266,7 @@ def plot_attention(attention, sentence, predicted_sentence):
     plt.show()
 
 #Retrieve the response based on the message
-def answer(sentence, training=False):
+def answer(sentence, training=True): #True für Prod; False für Dev
     result, sentence, attention_plot = evaluate(sentence)
 
     if training:
