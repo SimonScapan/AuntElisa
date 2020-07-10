@@ -2,3 +2,8 @@ flask
 flask_cors
 regex
 numpy
+tensorflow
+pickle
+matplotlib.pyplot
+pandas
+nltk
