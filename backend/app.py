@@ -12,7 +12,7 @@ batch_size = 32
 emb_dim = 50
 
 #Load the preprocessed data
-with open('/chatbot/model 2/preprocessing/preprocessed_data.pkl', 'rb') as f:
+with open('/chatbot/model_2/preprocessing/preprocessed_data.pkl', 'rb') as f:
         preprocessed_data = pickle.load(f)
 wordtoix = preprocessed_data['word2ix']
 ixtoword = preprocessed_data['ixtoword']
@@ -34,7 +34,7 @@ decoder = Decoder(vocab_len, emb_dim, GRU_units, batch_size, embeddings)
 
 #Load the current tensorflow model
 checkpoint = tf.train.Checkpoint(optimizer=optimizer, encoder=encoder, decoder=decoder)
-manager = tf.train.CheckpointManager(checkpoint, '/chatbot/model 2/training/', max_to_keep = 300)
+manager = tf.train.CheckpointManager(checkpoint, '/chatbot/model_2/training/model', max_to_keep = 300)
 checkpoint.restore(manager.latest_checkpoint)
 
 # initialize Flask
