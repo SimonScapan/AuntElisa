@@ -1,4 +1,4 @@
-# Seq2Se2 Models
+# Seq2Seq Models
 Here you are able to read a short description about the two different training files and how to use the different models.
 
 ## Model 1
