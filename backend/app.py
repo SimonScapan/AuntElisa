@@ -3,15 +3,15 @@ from flask import Flask, request
 from flask_cors import CORS
 import pickle
 import tensorflow as tf
-from functions import answer, make_embedding_layer
+from AuntElsa.backend.chatbot.model_2.functions import answer, make_embedding_layer
 from classes import Decoder, Encoder
 
-#Define test environment
+# define test environment
 GRU_units = 256
 batch_size = 32
 emb_dim = 50
 
-#Load the preprocessed data
+# load the preprocessed data
 with open('/chatbot/model_2/preprocessing/preprocessed_data.pkl', 'rb') as f:
         preprocessed_data = pickle.load(f)
 wordtoix = preprocessed_data['word2ix']
@@ -21,7 +21,7 @@ short_vocab = preprocessed_data['short_vocab']
 max_len_q = preprocessed_data['max_len_q']
 max_len_a = preprocessed_data['max_len_q']
 
-#Define Parameters to use the model
+# define parameters to use the model
 end_token = '<EOS>'
 start_token = '<BOS>'
 pad_token = 'pad0'
@@ -32,7 +32,7 @@ embeddings = make_embedding_layer(vocab_len=vocab_len, wordtoix=wordtoix, embedd
 encoder = Encoder(vocab_len, emb_dim, GRU_units, batch_size, max_len_q, embeddings)
 decoder = Decoder(vocab_len, emb_dim, GRU_units, batch_size, embeddings)
 
-#Load the current tensorflow model
+# load the current tensorflow model
 checkpoint = tf.train.Checkpoint(optimizer=optimizer, encoder=encoder, decoder=decoder)
 manager = tf.train.CheckpointManager(checkpoint, '/chatbot/model_2/training/model', max_to_keep = 300)
 checkpoint.restore(manager.latest_checkpoint)
@@ -41,11 +41,20 @@ checkpoint.restore(manager.latest_checkpoint)
 APP = Flask(__name__, static_folder="build/static", template_folder="build")
 CORS = CORS(APP)
 
+# model input function
+def inputfunc(text):
+    response = answer(text, max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword)
+    print(response)
+    return response
+
+
 # listen to GET method and compute input text with chatbot and give back to frontend
 @APP.route('/backend/<text>', methods=["GET"])
 def chatbot(text):
-    foo = answer(text, max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword)
-    return foo
+    print(text)
+    response = inputfunc(text)
+    print(response)
+    return response
 
 # run APP on localhost
 if __name__ == '__main__':

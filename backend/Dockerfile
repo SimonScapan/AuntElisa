@@ -11,6 +11,7 @@ COPY ./requirements.txt /app/requirements.txt
 WORKDIR /app
 
 # Install all python-libaries from requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY ./ /app
 
