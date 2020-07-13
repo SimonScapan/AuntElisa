@@ -19,7 +19,7 @@ export function communication(input) {
       response = serverResponse;
     }
   });
-  console.log(response);
+  console.log('from bakend: ' + response);
   // response from backend is given back
   return response;
 }

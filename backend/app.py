@@ -3,8 +3,8 @@ from flask import Flask, request
 from flask_cors import CORS
 import pickle
 import tensorflow as tf
-from AuntElsa.backend.chatbot.model_2.functions import answer, make_embedding_layer
-from classes import Decoder, Encoder
+from chatbot.model_2.functions import answer, make_embedding_layer
+from chatbot.model_2.classes import Decoder, Encoder
 
 # define test environment
 GRU_units = 256
@@ -12,7 +12,7 @@ batch_size = 32
 emb_dim = 50
 
 # load the preprocessed data
-with open('/chatbot/model_2/preprocessing/preprocessed_data.pkl', 'rb') as f:
+with open('chatbot/model_2/preprocessing/preprocessed_data.pkl', 'rb') as f:
         preprocessed_data = pickle.load(f)
 wordtoix = preprocessed_data['word2ix']
 ixtoword = preprocessed_data['ixtoword']
@@ -41,21 +41,14 @@ checkpoint.restore(manager.latest_checkpoint)
 APP = Flask(__name__, static_folder="build/static", template_folder="build")
 CORS = CORS(APP)
 
-# model input function
-def inputfunc(text):
-    response = answer(text, max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword)
-    print(response)
-    return response
-
-
 # listen to GET method and compute input text with chatbot and give back to frontend
 @APP.route('/backend/<text>', methods=["GET"])
 def chatbot(text):
-    print(text)
-    response = inputfunc(text)
-    print(response)
+    response = str(answer(str(text), max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword))
     return response
 
 # run APP on localhost
 if __name__ == '__main__':
     APP.run(debug=True, host='0.0.0.0')
+
+

@@ -30,15 +30,16 @@ class Chatbot extends React.Component {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
+    // set input language to english
+    recognition.lang = 'en-US';
     // start listening
     recognition.start();
     // if there is no longer voice input, than we can access to the result
     recognition.onresult = (event) => {
         const speechToText = event.results[0][0].transcript;
-        console.log(speechToText);
         // set the users voice as string to state variable
         this.setState({ text: speechToText });
-        console.log(this.state.text);
+        console.log('input from speechrecognition: ' + this.state.text);
     }
   }
 
@@ -50,7 +51,7 @@ class Chatbot extends React.Component {
           // for this we use Mozillas SpeechSynthesiser
           var output = new SpeechSynthesisUtterance(text);
           // set the Language to english
-          output.lang = 'en-GB';
+          output.lang = 'en-US';
           synth.speak(output);
       };
       return speak(input);
