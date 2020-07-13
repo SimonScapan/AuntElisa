@@ -19,6 +19,8 @@ You need to install docker on your machine to run the project.
 If you allready have docker installed, continue to next point.
 Else visit [Docker](https://docs.docker.com/get-docker/) to install Docker software.
 
+Because the model data is too big for GitHub, download the files from [GoogleDrive](https://drive.google.com/drive/folders/1qkqUJqsTw3lYPvoIKi1xJLhdjgPWzu9b?usp=sharing) and copy them to ``` backend/chatbot/model_2/training/model```.
+
 ### Installing
 
 This step by step series tells you how to get a development env running:
