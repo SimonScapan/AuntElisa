@@ -51,7 +51,7 @@ class Chatbot extends React.Component {
           // for this we use Mozillas SpeechSynthesiser
           var output = new SpeechSynthesisUtterance(text);
           // set the Language to english
-          output.lang = 'en-US';
+          output.lang = 'en-GB';
           synth.speak(output);
       };
       return speak(input);

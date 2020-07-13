@@ -35,7 +35,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 #Import own functions
-from functions import clean_text, split_dataset, progressBar, make_embedding_layer, evaluate, plot_attention, answer, loss_function, test_bot, plot_history
+from functions import split_dataset, make_embedding_layer, answer
 
 #Import own classes
 from classes import Encoder, BahdanauAttention, Decoder
@@ -82,7 +82,7 @@ pairs_final_train, pairs_final_test, pairs_final_valid = split_dataset(pairs_fin
 vocab_len = len(short_vocab) + 2
 
 #Making the embedding mtrix and decide whether to use pretrained word embeddings
-embeddings = make_embedding_layer(vocab_len=vocab_len, wordtoix=wordtoix, embedding_dim=emb_dim, glove=not test)
+embeddings = make_embedding_layer(vocab_len=vocab_len, wordtoix=wordtoix, embedding_dim=emb_dim, glove=False)
 
 #Create encoder
 encoder = Encoder(vocab_len, emb_dim, GRU_units, batch_size, max_len_q, embeddings)
@@ -95,51 +95,76 @@ optimizer = tf.keras.optimizers.Adam(init_lr)
 
 #Initalize a checkpoint to save the model later
 checkpoint = tf.train.Checkpoint(optimizer=optimizer, encoder=encoder, decoder=decoder)
-manager = tf.train.CheckpointManager(checkpoint, '../training/model', max_to_keep = 300)
 
 #Define and calculate hyperparameters for training/testing
-history={'loss':[], 'lossTest':[]}
+history={'TestSimilarity':[]}
 smallest_loss = np.inf
 best_ep = 1
-EPOCHS = 201 # but 150 is enough
 enc_hidden = encoder.initialize_hidden_state()
-steps_per_epoch = len(pairs_final_train)//batch_size # used for caculating number of batches
-current_ep = 1
-batch_per_epoche = 6
 
-#Load the model to be tested
-checkpoint.restore(manager.latest_checkpoint)
+#Define tested epochs
+start_epoch = 0
+number_of_epochs = 200
+step = 20
 
-print("Restored from {}".format(manager.latest_checkpoint))
-tested_epoch = int(manager.latest_checkpoint[36:])
-
-with open('../training/training_history.pkl', 'rb') as f:
-  history = pickle.load(f)
-
-batch_loss = K.constant(0)
-X, y = [], []
-
-
-#Test the loaded epoche based on test data
+#Define testing
 GRU_units = 10
-pairs_final_test_new = []
+batch_size = 4
 training = False
 test = True
-test_progress = 0
 
-for test_record in pairs_final_test:
-    test_progress+=1
-    print('Testing this epoche')
-    progressBar(value=test_progress,endvalue=len(pairs_final_test))
-    test_record.append(answer(test_record[0], max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword))
-    pairs_final_test_new.append(test_record)
+with open('test_history.pkl', 'rb') as f:
+  history = pickle.load(f)
 
-#Calculate the Loss mean of tested data in this epoche
-test_loss = statistics.mean([loss_function(loss[1], loss[2]) for loss in pairs_final_test_new])
-print(f'Test-Loss of epoche {tested_epoch}: {test_loss}')
+for tested_epoch in range(start_epoch, number_of_epochs+1, step):
 
-#Save the tested results
-history['lossTest'].append(test_loss)
+  if tested_epoch == 0:
+    tested_epoch = 1
 
-with open('training_history.pkl', 'wb') as f:
-    pickle.dump(history, f)
+  #Load the model to be tested
+  checkpoint.restore("../training/model/ckpt-" + str(tested_epoch))
+  similarities = []
+  print('Testing epoch ', tested_epoch)
+
+  for test_record in pairs_final_test:
+      #Define question, real answer and predicted answer
+      question = test_record[0]
+      label = test_record[1]
+      output = answer(question, max_len_a, max_len_q, wordtoix, start_token, end_token, GRU_units, encoder, decoder, ixtoword)[:-1]
+
+      #Split words of the sentences 
+      label_list = label.split(' ')
+      output_list = output.split(' ')
+
+      #Remove stop words from the string 
+      label_set = set(label_list)  
+      output_set = set(output_list)
+
+      #Create empty word vectors
+      l1 =[];l2 =[]
+
+      #Form a set containing keywords of both strings  
+      rvector = label_set.union(output_set)  
+      for w in rvector: 
+          if w in label_set: l1.append(1) # create a vector 
+          else: l1.append(0) 
+          if w in output_set: l2.append(1) 
+          else: l2.append(0) 
+      c = 0
+      
+      #Compute the cosine similarity  
+      for i in range(len(rvector)): 
+              c+= l1[i]*l2[i]
+      cosine = c / float((sum(l1)*sum(l2))**0.5) 
+      similarities.append(cosine)
+
+  #Compute average similarity per epoch
+  similarity = statistics.mean(similarities)
+  print(f'Similarity of epoche {tested_epoch}: {similarity}')
+  print('---------------------------------------------------------')
+
+  #Save the tested results
+  history['TestSimilarity'].append(similarity)
+
+  with open('test_history.pkl', 'wb') as f:
+      pickle.dump(history, f)
