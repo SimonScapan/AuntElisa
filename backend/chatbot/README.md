@@ -1,5 +1,12 @@
-# Seq2Seq Models
-Here you are able to read a short description about the two different training files and how to use the different models.
+# Overview of the approaches
+Here you are able to read a short description about the two different training files and how to use the different models. Please note that you have to use a file with pretrained word embeddings if you want to run the training.py file of model_0 or model_2. This files supports the training and leads to usable results after a smaller ammount of training epochs. Therefor you have to download [this file](https://www.kaggle.com/watts2/glove6b50dtxt/download) and put it into the chatbot/data directory.
+
+## Model 0
+This model is created by connecting the different layers manually. This did not work well as we were not able to connect the layers the right way after a long debugging session. The result is that the model looks like it is training based on the data but it actually does not train any weights. That is why we are not able to provide a working model here. Anyway we want to show this approach to follow the development of the project. 
+
+As this approach did not work, the code still looks very similar to the paper it is based on (There was no additional benefit on improving and granularly commenting the code)
+
+Cronologically this model was made and used after model_1. But we ended up with the opinion to store it as model_0 because it did not led to any usable results.
 
 ## Model 1
 While training this model, we reached negative probabilities. So we had to stop th training after epoche 29. More informations about this approach are documented in the project report.

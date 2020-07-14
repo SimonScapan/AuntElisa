@@ -89,7 +89,7 @@ def make_embedding_layer(vocab_len, wordtoix, embedding_dim=100, glove=True):
     else:
         print('Loading glove...')
         embeddings_index = {} 
-        f = open('/content/drive/My Drive/Data Exploration Project/glove.6B.50d.txt', encoding="utf-8")
+        f = open('../data/glove.6B.50d.txt', encoding="utf-8")
         for line in f:
             values = line.split()
             word = values[0]
