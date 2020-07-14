@@ -97,13 +97,13 @@ optimizer = tf.keras.optimizers.Adam(init_lr)
 checkpoint = tf.train.Checkpoint(optimizer=optimizer, encoder=encoder, decoder=decoder)
 
 #Define and calculate hyperparameters for training/testing
-history={'TestSimilarity':[]}
+history={'TestSimilarity':[], 'variance':[]}
 smallest_loss = np.inf
 best_ep = 1
 enc_hidden = encoder.initialize_hidden_state()
 
 #Define tested epochs
-start_epoch = 0
+start_epoch = 180
 number_of_epochs = 200
 step = 20
 
@@ -113,8 +113,12 @@ batch_size = 4
 training = False
 test = True
 
-with open('test_history.pkl', 'rb') as f:
-  history = pickle.load(f)
+#Try to load the already computed test history
+try:
+  with open('test_history.pkl', 'rb') as f:
+    history = pickle.load(f)
+except:
+  pass
 
 for tested_epoch in range(start_epoch, number_of_epochs+1, step):
 
@@ -152,19 +156,23 @@ for tested_epoch in range(start_epoch, number_of_epochs+1, step):
           else: l2.append(0) 
       c = 0
       
-      #Compute the cosine similarity  
+      #Compute Cosine similarity  
       for i in range(len(rvector)): 
               c+= l1[i]*l2[i]
       cosine = c / float((sum(l1)*sum(l2))**0.5) 
       similarities.append(cosine)
 
-  #Compute average similarity per epoch
+  #Compute average similarity and the variance per epoch
   similarity = statistics.mean(similarities)
+  variance = statistics.variance(similarities)
+
   print(f'Similarity of epoche {tested_epoch}: {similarity}')
+  print(f'Variance of epoche {tested_epoch}: {variance}')
   print('---------------------------------------------------------')
 
   #Save the tested results
   history['TestSimilarity'].append(similarity)
+  history['variance'].append(variance)
 
   with open('test_history.pkl', 'wb') as f:
       pickle.dump(history, f)
