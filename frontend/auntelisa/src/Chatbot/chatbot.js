@@ -74,7 +74,7 @@ class Chatbot extends React.Component {
     // compute answer using chatbot
     inputtext = communication(inputtext);
     // reset state with new answer
-    this.setState({ Text: inputtext });
+    this.setState({ text: inputtext });
     // give audio response to user
     this.speak(inputtext);
   }

@@ -75,7 +75,9 @@ Then say something to elisa and wait until the sign disappears.
 
 If you are ready click on "GET RESPONSE" to hear, what Elisa want's to response you.
 
-Repeat the last two steps to enjoy a full conversatoin with the chatbot.
+So that you know which text is currently being processed, it is displayed above the two buttons.
+
+Repeat the steps to enjoy a full conversatoin with the chatbot.
 
 
 
