@@ -90,6 +90,12 @@ class Chatbot extends React.Component {
             </IconButton>
         </div>
 
+        {/* show text to be processed */}
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
+          <h3>Processed text: </h3>
+          <p>{this.state.text}</p>
+        </div>
+
         {/* Talk button*/}
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
           <Button 

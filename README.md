@@ -70,6 +70,9 @@ By clicking on "START AUNT ELISA" the application gets usable.
 You can return to Landingpage by clicking on the house icon top left.
 
 Press "TALK" and speak to Elisa.
+After pressing the button you have to wait for the recording button in your tab-bar.
+Then say something to elisa and wait until the sign disappears.
+
 If you are ready click on "GET RESPONSE" to hear, what Elisa want's to response you.
 
 Repeat the last two steps to enjoy a full conversatoin with the chatbot.
