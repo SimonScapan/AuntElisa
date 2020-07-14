@@ -8,6 +8,8 @@ As this approach did not work, the code still looks very similar to the paper it
 
 Cronologically this model was made and used after model_1. But we ended up with the opinion to store it as model_0 because it did not led to any usable results.
 
+This model was inspired by a [publication of Akira Takezawa](https://towardsdatascience.com/how-to-implement-seq2seq-lstm-model-in-keras-shortcutnlp-6f355f3e5639).
+
 ## Model 1
 While training this model, we reached negative probabilities. So we had to stop th training after epoche 29. More informations about this approach are documented in the project report.
 If you want to try using the model anyway, you have to download it from [here](https://drive.google.com/file/d/1-Wye2qLMIkrWpGFL0dcdSIaJVQuqD5T2/view?usp=sharing) into the directory "model1" and start the file "use_chatbot.py" in this directory. Unfortunately the model was too large to store in github.
@@ -16,6 +18,8 @@ If you want to try using the model anyway, you have to download it from [here](h
 
 As this approach is not the offical approach we are handing in as the result of our project, this file is not completely cleaned up. We just want to provide the opprtuinity to follow the steps we did in the development of the project.
 
+This model was inspired by a [repository of tensorlayer](https://github.com/tensorlayer/seq2seq-chatbot).
+
 ## Model 2
 Model 2 is our offical approach wich is also implemented in the frontend. To use this model you have to download it from [here](https://drive.google.com/drive/folders/1qkqUJqsTw3lYPvoIKi1xJLhdjgPWzu9b?usp=sharing), put the 4 files into the following directory: model_2/training/model and start the frontend as discribed [here](https://github.com/SimonScapan/AuntElisa).
 
@@ -23,4 +27,5 @@ Additional information about the functionality and the developemnt of this model
 
 As this approach is the offical approach we are handing in as the result of our project, this file is cleaned up and structured in the different steps of development.
 
+This model was inspired by a [repository of Moein Hasani](https://github.com/Moeinh77/Chatbot-with-TensorFlow-and-Keras).
 
