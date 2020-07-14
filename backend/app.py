@@ -34,8 +34,7 @@ decoder = Decoder(vocab_len, emb_dim, GRU_units, batch_size, embeddings)
 
 # load the current tensorflow model
 checkpoint = tf.train.Checkpoint(optimizer=optimizer, encoder=encoder, decoder=decoder)
-manager = tf.train.CheckpointManager(checkpoint, 'chatbot/model_2/training/model', max_to_keep = 300)
-checkpoint.restore(manager.latest_checkpoint)
+checkpoint.restore('chatbot/model_2/training/model/ckpt-120')
 
 # initialize Flask
 APP = Flask(__name__, static_folder="build/static", template_folder="build")
