@@ -14,7 +14,6 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 #Add the parent directory to sys.path
-import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
