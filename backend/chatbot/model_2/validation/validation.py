@@ -1,32 +1,21 @@
 #Import packages
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 import numpy as np
 import os
 import pandas as pd
 import pickle
 import random
-import re
-import string
 import sys
 import tensorflow as tf
 import time
 
 #Import functions and classes
-from nltk.translate.bleu_score import corpus_bleu
-from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
 from tensorflow.keras import optimizers
 from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.layers import add, Input, Dense, LSTM, GRU, TimeDistributed, Embedding, Dropout, Bidirectional, Concatenate, Lambda
-from tensorflow.keras.models import Model
-from tensorflow.keras.utils import plot_model
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.layers import GRU, Embedding
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.text import Tokenizer
 
 #Add the parent directory to sys.path
-import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
