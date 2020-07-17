@@ -93,7 +93,7 @@ Repeat the steps to enjoy a full conversatoin with the chatbot.
 
 ## Authors
 
-* **Simon Scapan** - *Initial work* - [SimonScapan](https://github.com/SimonScapan)
+* **Simon Scapan** - *Fullstack development* - [SimonScapan](https://github.com/SimonScapan)
 
 * **Jannik Fischer** - *Contribution* - [Algebrator1997](https://github.com/Algebrator1997)
 
